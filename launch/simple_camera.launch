@@ -1,0 +1,16 @@
+<launch>
+  <!-- Start Gazebo with the default empty world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="false" />
+    <arg name="gui" value="true" />
+    <arg name="verbose" value="true"/>
+  </include>
+
+  <!-- Load URDF description into the parameter server -->
+  <param name="sensor_description" command="$(find xacro)/xacro --inorder '$(find gazebo_sensor_collection)/urdf/cameras/simple_camera.xacro'" />
+
+  <!-- Spawn the URDF model in Gazebo -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -model simple_camera -param sensor_description" /> 
+
+</launch>
